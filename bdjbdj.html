@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메시지 전송</title>
+</head>
+<body>
+    <input type="text" id="메시지입력란" placeholder="메시지를 입력하세요">
+    <button id="메시지전송버튼">메시지 전송</button>
+
+    <script>
+        document.getElementById('메시지전송버튼').addEventListener('click', () => {
+            // 텍스트 입력 필드에서 입력한 값을 가져와서 메시지 데이터에 추가
+            const 메시지내용 = document.getElementById('메시지입력란').value;
+            const 친구닉네임 = ["백동진"]; 
+            const 목록설정 = "채팅목록"
+            const 딜레이시간 = 0.5
+            // 동적으로 생성할 메시지 데이터
+            const 메시지데이터 = {
+                작업명: "카톡_보내기",
+                params: [친구닉네임, 목록설정, 메시지내용, 딜레이시간]
+            };
+            
+
+            // 서버로 메시지 데이터를 전송
+            fetch('https://port-0-moatest-v2-1272llwum1mdc.sel5.cloudtype.app/sendMessage', {
+                method: 'POST', // POST 메서드를 사용하여 데이터 전송
+                headers: {
+                    'Content-Type': 'application/json' // JSON 형식의 데이터를 전송함을 명시
+                },
+                body: JSON.stringify(메시지데이터) // JSON 형식으로 데이터 변환하여 전송
+            })
+            .then(응답 => {
+                if (!응답.ok) {
+                    throw new Error('네트워크 응답이 정상적이지 않습니다');
+                }
+                return 응답.text();
+                
+            })
+            .then(데이터 => {
+                console.log(데이터); // 서버로부터 받은 응답 로그에 출력
+                
+            })
+            .catch(오류 => {
+                console.error('오류 발생:', 오류);
+                alert('메시지 전송 중 오류가 발생했습니다');
+            });
+        });
+    </script>
+</body>
+</html>
