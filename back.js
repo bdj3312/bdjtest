@@ -10,20 +10,20 @@ app.use(bodyParser.json());
 app.options('*', cors());
 
 // 포트 번호 읽기
-const readPort = async () => {
-    try {
-        const data = await readFile('C:\\Temp\\KAKAUTO\\port.txt', 'utf8');
-        return data.trim();
-    } catch (err) {
-        throw err;
-    }
-};
+// const readPort = async () => {
+//     try {
+//         const data = await readFile('C:\\Temp\\KAKAUTO\\port.txt', 'utf8');
+//         return data.trim();
+//     } catch (err) {
+//         throw err;
+//     }
+// };
 
 
 app.post('/sendMessage', async (req, res) => {
     try {
-        const port = await readPort();
-        console.log(port)
+        // const port = await readPort();
+        // console.log(port)
         const SERVER_HOST = 'localhost';
         const 친구닉네임 = req.body.params[0]; // 친구 닉네임 배열
         const 카톡메세지내용 = req.body.params[2]; // 카톡 메시지 내용
